@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: droidcode
+    runtime: python
+    plan: free
+    region: singapore
+    buildCommand: pip install -r requirements.txt && pip install -e .
+    startCommand: uvicorn webapp.app:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /healthz
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.6"
+      - key: PYTHONUNBUFFERED
+        value: "1"

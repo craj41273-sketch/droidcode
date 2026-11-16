@@ -53,6 +53,17 @@ python -c "from droidcode.client import DaemonClient; print(DaemonClient('/tmp/d
 droidcode eval --dir evals/tasks --tokens evals/tokens.json
 ```
 
+## Web surface
+
+`webapp/` wraps the harness in a small FastAPI service - three JSON endpoints and
+one server-rendered report page - sized for a free hosting tier. It ships a
+`render.yaml` blueprint; see `docs/DEPLOY.md`.
+
+```bash
+pip install -r requirements.txt && pip install -e .
+uvicorn webapp.app:app --port 8000    # http://localhost:8000
+```
+
 ## How it fits together
 
 ```
@@ -74,6 +85,7 @@ protocol -> uitree -> vision -> checks -> audit -> registry -> session
 | `registry` | Tool schemas, risk classes, permission gating. |
 | `session` | Transcript, context budget, model-agnostic turn loop. |
 | `daemon` / `client` | Unix-socket JSON-lines server and SDK client. |
+| `webapp` | FastAPI service: JSON API plus a server-rendered report page. |
 | `evals` | Task fixtures with known-good findings, scored by F1. |
 
 ## Design commitments

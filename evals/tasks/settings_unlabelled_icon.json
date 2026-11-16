@@ -1,0 +1,53 @@
+{
+  "id": "settings_unlabelled_icon",
+  "goal": "Find the unlabelled icon control on the settings screen",
+  "scenario": {
+    "name": "settings",
+    "spec": {
+      "width_px": 1080,
+      "height_px": 2400,
+      "density_dpi": 440
+    },
+    "background": "#FFFFFF",
+    "widgets": [
+      {
+        "id": "row_profile",
+        "class_name": "android.widget.TextView",
+        "text": "Profile",
+        "bounds": [
+          40,
+          300,
+          600,
+          400
+        ],
+        "bg": "#FFFFFF",
+        "fg": "#1C1B1F",
+        "text_size_dp": 16
+      },
+      {
+        "id": "btn_more",
+        "class_name": "android.widget.ImageButton",
+        "text": "",
+        "content_desc": "",
+        "bounds": [
+          900,
+          300,
+          1040,
+          440
+        ],
+        "bg": "#FFFFFF",
+        "fg": "#1C1B1F",
+        "clickable": true
+      }
+    ]
+  },
+  "expect": [
+    {
+      "rule_id": "a11y.label.missing",
+      "node_id": "btn_more"
+    }
+  ],
+  "grade": [
+    "a11y.label.missing"
+  ]
+}

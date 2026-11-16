@@ -1,0 +1,68 @@
+{
+  "id": "clean_profile_screen",
+  "goal": "Confirm a well-built screen produces no findings (false-positive control)",
+  "grade": [
+    "ux.contrast.text",
+    "ux.target.min_size",
+    "a11y.label.missing",
+    "ux.spacing.grid",
+    "ux.text.overflow",
+    "design.token.drift"
+  ],
+  "scenario": {
+    "name": "profile",
+    "spec": {
+      "width_px": 1080,
+      "height_px": 2400,
+      "density_dpi": 440
+    },
+    "background": "#FFFFFF",
+    "widgets": [
+      {
+        "id": "avatar",
+        "class_name": "android.widget.ImageView",
+        "text": "",
+        "content_desc": "Profile photo",
+        "bounds": [
+          440,
+          220,
+          660,
+          440
+        ],
+        "bg": "#FFFFFF",
+        "fg": "#6750A4",
+        "clickable": true
+      },
+      {
+        "id": "name",
+        "class_name": "android.widget.TextView",
+        "text": "Chandan Raj",
+        "bounds": [
+          242,
+          462,
+          838,
+          550
+        ],
+        "bg": "#FFFFFF",
+        "fg": "#1C1B1F",
+        "text_size_dp": 22
+      },
+      {
+        "id": "btn_edit",
+        "class_name": "android.widget.Button",
+        "text": "Edit profile",
+        "bounds": [
+          242,
+          594,
+          838,
+          726
+        ],
+        "bg": "#6750A4",
+        "fg": "#FFFFFF",
+        "text_size_dp": 16,
+        "clickable": true
+      }
+    ]
+  },
+  "expect": []
+}

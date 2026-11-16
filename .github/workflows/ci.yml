@@ -1,0 +1,63 @@
+name: ci
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  test:
+    name: tests (py${{ matrix.python }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+      - run: pip install -e ".[dev]"
+      - run: pytest -q
+
+  evals:
+    name: eval suite
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -e .
+      - name: Score the rule set
+        run: |
+          droidcode eval --dir evals/tasks --tokens evals/tokens.json | tee eval.json
+          python - <<'PY'
+          import json, sys
+          result = json.load(open("eval.json"))
+          print(f"F1={result['mean_f1']} passed={result['passed']}/{result['tasks']}")
+          sys.exit(0 if result["passed"] == result["tasks"] else 1)
+          PY
+
+  # Real-hardware verification is deliberately separate from the fast jobs: an
+  # emulator boot is minutes, not seconds, and it must never gate a pull request
+  # on a flaky KVM runner.
+  #
+  # android-emulator:
+  #   name: emulator smoke (manual)
+  #   if: github.event_name == 'workflow_dispatch'
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-python@v5
+  #       with: { python-version: "3.12" }
+  #     - run: pip install -e .
+  #     - uses: reactivecircus/android-emulator-runner@v2
+  #       with:
+  #         api-level: 34
+  #         target: google_apis
+  #         arch: x86_64
+  #         script: droidcode audit --adb --tokens evals/tokens.json --package com.example.app

@@ -1,0 +1,75 @@
+{
+  "id": "checkout_low_contrast",
+  "goal": "Find the accessibility and target-size defects on the checkout screen",
+  "package": "com.example.shop",
+  "scenario": {
+    "name": "checkout",
+    "package": "com.example.shop",
+    "spec": {
+      "width_px": 1080,
+      "height_px": 2400,
+      "density_dpi": 440
+    },
+    "background": "#FFFFFF",
+    "widgets": [
+      {
+        "id": "title",
+        "class_name": "android.widget.TextView",
+        "text": "Checkout",
+        "bounds": [
+          40,
+          200,
+          600,
+          280
+        ],
+        "bg": "#FFFFFF",
+        "fg": "#1C1B1F",
+        "text_size_dp": 24
+      },
+      {
+        "id": "btn_pay",
+        "class_name": "android.widget.Button",
+        "text": "Pay now",
+        "bounds": [
+          40,
+          1800,
+          1040,
+          1932
+        ],
+        "bg": "#FFFFFF",
+        "fg": "#EEEEEE",
+        "text_size_dp": 16,
+        "clickable": true
+      },
+      {
+        "id": "btn_cancel",
+        "class_name": "android.widget.Button",
+        "text": "Cancel",
+        "bounds": [
+          40,
+          1960,
+          120,
+          2000
+        ],
+        "bg": "#FFFFFF",
+        "fg": "#1C1B1F",
+        "text_size_dp": 14,
+        "clickable": true
+      }
+    ]
+  },
+  "expect": [
+    {
+      "rule_id": "ux.contrast.text",
+      "node_id": "btn_pay"
+    },
+    {
+      "rule_id": "ux.target.min_size",
+      "node_id": "btn_cancel"
+    }
+  ],
+  "grade": [
+    "ux.contrast.text",
+    "ux.target.min_size"
+  ]
+}
